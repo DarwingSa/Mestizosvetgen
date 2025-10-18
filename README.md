@@ -1,4 +1,4 @@
-# VETReportGen
+quiero que al momento de exportar la plantilla .pdf la parte donde dice , sea un poco mas pequeña dado que cuando lo vas a guardar como pdf o imprimir, tiene mucho espacio muerto# VETReportGen
 
 Este es un generador de informes de hematología veterinaria construido con Next.js y Firebase Studio.
 

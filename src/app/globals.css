@@ -85,6 +85,10 @@
 }
 
 @media print {
+ @page {
+    size: letter;
+    margin: 0.5in;
+  }
   body {
     background: white;
   }
