@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Printer, ArrowUp, ArrowDown, FilePlus, HeartPulse } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import Image from 'next/image';
 
 interface ReportProps {
   data: ReportData;
@@ -71,10 +72,18 @@ export default function Report({ data, onReset }: ReportProps) {
         <CardHeader>
             <div className="flex items-start justify-between">
                 <div>
-                    <CardTitle className="text-4xl font-headline text-card-foreground">THE PETS HOUSE</CardTitle>
+                    <CardTitle className="text-4xl font-headline text-card-foreground">MESTIZOS CENTRO VETERINARIO</CardTitle>
                     <CardDescription className="text-xl">Informe de Hematología</CardDescription>
                 </div>
-                <HeartPulse className="w-16 h-16 text-primary" />
+                <div className="text-right">
+                  <Image 
+                    src="/logo.png" // El path empieza con '/' porque está en la carpeta 'public'
+                    alt="Logo de la Clínica" // Texto alternativo importante para la accesibilidad
+                    width={150} // Define el ancho de la imagen en píxeles
+                    height={150} // Define el alto de la imagen en píxeles
+                    className="object-contain" // Esto asegura que la imagen se escale correctamente
+                    />
+                </div>
             </div>
         </CardHeader>
         <CardContent className="p-2 sm:p-6">
@@ -111,7 +120,7 @@ export default function Report({ data, onReset }: ReportProps) {
 
             <div className="mt-8 text-xs text-muted-foreground text-center">
                 <p>LOS RANGOS DE REFERENCIA DEBEN SER INTERPRETADOS POR UN PROFESIONAL VETERINARIO.</p>
-                <p>THE PETS HOUSE - Contacto: (0412) 553-9134</p>
+                <p>MESTIZOS CENTRO VETERINARIO - Contacto: (0212) 761-7823</p>
             </div>
         </CardContent>
       </Card>

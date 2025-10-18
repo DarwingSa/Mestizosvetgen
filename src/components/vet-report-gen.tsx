@@ -26,6 +26,7 @@ const FormSchema = z.object({
   race: z.string().min(1, 'La raza es requerida.'),
   age: z.string().min(1, 'La edad es requerida.'),
   sex: z.string().min(1, 'El sexo es requerido.'),
+  vet: z.enum(["DR. JULIO MENDOZA", "DR. SONSIRE RAMOS"], { required_error: 'Debe seleccionar un veterinario.' }),
 });
 
 type FormData = z.infer<typeof FormSchema>;
@@ -48,6 +49,7 @@ export default function VetReportGen() {
       race: '',
       age: '',
       sex: '',
+      vet: 'DR. JULIO MENDOZA',
     },
   });
 
@@ -59,7 +61,6 @@ export default function VetReportGen() {
       const headers = lines[0].split(',').map(h => h.trim());
       const values = lines[1].split(',').map(v => v.trim());
       
-      // Encabezados que no son resultados médicos y deben ser ignorados
       const NON_MEDICAL_HEADERS = ['ID mstra.', 'Tiempo', 'Modo', 'Especie()'];
       
       const rowData: { [key: string]: string } = {};
@@ -89,7 +90,7 @@ export default function VetReportGen() {
             result: valueStr,
             indicator: '',
             range: '',
-            unit: '', // Se determinará después con los rangos de referencia
+            unit: '',
           });
         }
       }
@@ -182,7 +183,6 @@ export default function VetReportGen() {
     const fullPatientData: PatientData = {
       ...csvData.patient,
       ...formData,
-      vet: 'DR. Eduardo Peña',
     };
     
     setReportData({ patient: fullPatientData, results: finalResults });
@@ -282,12 +282,27 @@ export default function VetReportGen() {
                     )} />
                 </div>
                  <div className="space-y-2">
-                    <Label>Médico Veterinario</Label>
-                    <p className="text-sm font-medium p-2 border rounded-md bg-muted">DR. Eduardo Peña</p>
+                    <FormField control={form.control} name="vet" render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Médico Veterinario</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Seleccione un veterinario" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    <SelectItem value="DR. JULIO MENDOZA">DR. JULIO MENDOZA</SelectItem>
+                                    <SelectItem value="DR. SONSIRE RAMOS">DR. SONSIRE RAMOS</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <FormMessage />
+                        </FormItem>
+                    )} />
                 </div>
               <CardFooter className="flex justify-end gap-2 p-0 pt-6">
                   <Button type="button" variant="outline" onClick={handleReset}>Cancelar</Button>
-                  <Button type="submit">Generar Informe PDF</Button>
+                  <Button type="submit">Generar Informe</Button>
               </CardFooter>
             </form>
           </Form>
